@@ -50,6 +50,16 @@ classes in the RGE stage, then the RGE stage name is `rge_reboot`.
       classes => 'my::rge::kernel_upgrade',
     }
 
+Alternatively, multiple classes can be specified by providing an array of
+class names:
+
+    class rge {
+      classes => [
+        'my::rge::kernel_upgrade',
+        'my::rge::driver_install',
+      ]
+    }
+
 If no classes are specified, then a
 `hiera_array('rge::classes_include')` call will be used to lookup the
 classes to include.  This can be useful to include roles from multiple
