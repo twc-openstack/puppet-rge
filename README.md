@@ -2,7 +2,7 @@
 
 ## Overview
 
-Helps prevent reboots except when you want them to occur
+This module helps you to prevent reboots except when you want them to occur.
 
 ## Module Description
 
@@ -36,11 +36,28 @@ with the `shutdown` command.
 
 The [puppetlabs reboot
 module](https://forge.puppetlabs.com/puppetlabs/reboot) only supports
-Windows.  If you're using Linux, you probably want to use the my fork of
-the puppet labs module found at
+Windows.  If you're using Linux, you probably want to use my fork of the
+puppet labs module found at
 <https://github.com/dvorak/puppetlabs-reboot>.
 
+## Usage
 
+The only parameter that the main `rge` class accepts is one for the
+classes to put in the RGE stage.  If you prefer to manually place your
+classes in the RGE stage, then the RGE stage name is `rge_reboot`.
 
+    class rge {
+      classes => 'my::rge::kernel_upgrade',
+    }
 
+If no classes are specified, then a `hiera_array` call will be used to
+lookup the classes to include.  This can be useful to include roles from
+multiple categories (role, site, etc).
 
+# Implementation
+
+There is a rge::reboot class that is not intended to be used directly.
+Stages cannot be set on resources directly, but only on classes.  In
+order to put the `reboot` and `file` resource for removing the the
+`/etc/RGE_DISARMED` file in the RGE stage, they have to be in a
+different class.
