@@ -50,9 +50,10 @@ classes in the RGE stage, then the RGE stage name is `rge_reboot`.
       classes => 'my::rge::kernel_upgrade',
     }
 
-If no classes are specified, then a `hiera_array` call will be used to
-lookup the classes to include.  This can be useful to include roles from
-multiple categories (role, site, etc).
+If no classes are specified, then a
+`hiera_array('rge::classes_include')` call will be used to lookup the
+classes to include.  This can be useful to include roles from multiple
+categories (role, site, etc).
 
 # Implementation
 
