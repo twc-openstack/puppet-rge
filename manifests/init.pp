@@ -1,5 +1,6 @@
 class rge (
-  $classes = hiera_array('rge::classes_include', [])
+  $classes        = hiera_array('rge::classes_include', []),
+  $classes_always = hiera_array('rge::classes_include_always', []),
 ) {
   stage { 'rge_reboot':
     before => Stage['main'],
@@ -11,12 +12,21 @@ class rge (
       before => Class['rge::reboot'],
     }
 
+    class { $classes_always:
+      stage  => 'rge_reboot',
+      before => Class['rge::reboot'],
+    }
+
     class { 'rge::reboot':
       stage => 'rge_reboot'
     }
   } else {
     notify { 'rge':
       message => 'reboot guard is ARMED, reboot not allowed!',
+    }
+
+    class { $classes_always:
+      before => Class['rge::reboot'],
     }
   }
 }

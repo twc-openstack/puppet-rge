@@ -65,6 +65,12 @@ If no classes are specified, then a
 classes to include.  This can be useful to include roles from multiple
 categories (role, site, etc).
 
+The RGE class also takes a `classes_always` parameter, which works exactly like
+`classes`, but will be included even if RGE is not configured.  This can be
+used for classes whose actions don't require a reboot, but should go into
+affect if a reboot occurs.  The default for the `classes_always` parameter is a
+`hiera_array('rge::classes_include_always')`.
+
 # Implementation
 
 There is a rge::reboot class that is not intended to be used directly.
