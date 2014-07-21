@@ -25,8 +25,6 @@ class rge (
       message => 'reboot guard is ARMED, reboot not allowed!',
     }
 
-    class { $classes_always:
-      before => Class['rge::reboot'],
-    }
+    include $classes_always
   }
 }
